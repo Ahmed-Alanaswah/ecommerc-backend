@@ -26,11 +26,11 @@ app.use(cors());
 
 app.use(express.json());
 
-app.get("/game", getGameData);
 app.listen(PORT, () => {
 	console.log(`server started on port ${PORT}`);
 });
 
+app.get("/game", getGameData);
 // crud endpoints
 
 //create favourung an game end point (create/post)

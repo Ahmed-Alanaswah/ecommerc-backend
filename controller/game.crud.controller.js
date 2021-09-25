@@ -6,7 +6,7 @@ const gamePiecModel = require("../models/game.mongoose.model");
 const createFavouriteGame = async (req, res) => {
 	//destructure the data from the request body
 
-	const { title, salePrice, normalPrice, tdealRatingitl, thumb } = req.body;
+	const { title, salePrice, normalPrice, dealRating, thumb, count } = req.body;
 	// now we that got our data we would want to save it in the db
 
 	const slug = title.toLowerCase().split(" ").join("-");
@@ -22,8 +22,9 @@ const createFavouriteGame = async (req, res) => {
 				slug: slug,
 				salePrice: salePrice,
 				normalPrice: normalPrice,
-				tdealRatingitl: tdealRatingitl,
+				dealRating: dealRating,
 				thumb: thumb,
+				count: count,
 			});
 
 			//saving a new instance data to db
@@ -46,14 +47,14 @@ const getFavouriteGame = async (req, res) => {
 };
 
 //delete controller for deleting a new item in our database
-const deleteFavouriteGame = async (req, res) => {
+const deleteFavouriteGame = (req, res) => {
 	const slug = req.params.slug;
 	// res.send(`your slug is ${slug}`);
-	gamePiecModel.remove({ slug: slug }, (error, data) => {
+	gamePiecModel.remove({ slug: slug }, async (error, data) => {
 		if (error) {
 			res.send(error);
 		} else {
-			// let data = await gamePiecModel.find({});
+			let data = await gamePiecModel.find({});
 			res.send(data);
 			// res.send();
 		}
@@ -62,18 +63,22 @@ const deleteFavouriteGame = async (req, res) => {
 //put controller for updating a new item in our database
 const updateFavouriteGame = async (req, res) => {
 	let slug = req.params.slug;
+	let id = req.params.id;
 	let updatedData = req.body;
 	gamePiecModel.findOne({ slug: slug }).then((game) => {
 		game.title = updatedData.title;
 		game.salePrice = updatedData.salePrice;
 		game.normalPrice = updatedData.normalPrice;
-		game.tdealRatingitl = updatedData.tdealRatingitl;
+		game.dealRating = updatedData.dealRating;
 		game.thumb = updatedData.thumb;
+		game.count = updatedData.count;
 
 		game.save();
 	});
-	let updateGameList = await gamePiecModel.find({});
-	res.status(200).send(updateGameList);
+	// let updateGameList = await gamePiecModel.find({});
+	res.send("Item Added to your Card");
+	let data = await gamePiecModel.find({});
+	res.send(data);
 	// const { title, salePrice, normalPrice, tdealRatingitl, thumb } = req.body;
 
 	// const slug = req.params.slug;

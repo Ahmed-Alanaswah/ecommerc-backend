@@ -18,8 +18,9 @@ const gameSchema = mongoose.Schema({
 	},
 	salePrice: String,
 	normalPrice: String,
-	tdealRatingitl: String,
+	dealRating: String,
 	thumb: String,
+	count: Number,
 });
 
 // model our schema

@@ -7,6 +7,7 @@ class GameModel {
 		this.normalPrice = data.normalPrice;
 		this.dealRating = data.dealRating;
 		this.thumb = data.thumb;
+		this.count = 1;
 	}
 }
 
